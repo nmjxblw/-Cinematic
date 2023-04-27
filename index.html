@@ -212,6 +212,13 @@
                         duration:500,
                         ease:"Bounce"
                     });
+
+                    var graphics = this.add.graphics();
+
+                    this.time.delayedCall(1000,()=>{
+                        graphics.fillStyle(0xFFFFFF,0.8);
+                        graphics.fillTriangle(95,150,90,145,90,155);
+                    });
                 });
 
                 this.time.delayedCall(3500,()=>{
