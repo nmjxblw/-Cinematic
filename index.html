@@ -17,20 +17,135 @@
             }
 
             create() {
-                let text1 = this.add.text(10, 20, "Intro")
+                let text1 = this.add.text(10, 20, 
+                `This is Intro page, click to next page.\n
+                This web mainly include:
+                1. Intro page.
+                2. Logo page.
+                3. Theme page.
+                4. Game canvas page.
+                5. Credit page.
+                (Keydown to goto the page.)
+                `
+                );
+
+                this.input.on('pointerdown', () => this.scene.start('Logo'));
+
+                this.input.keyboard.on('keydown', (event) => {
+                    console.log('keydown event', event);
+                    if (event.key == '1') {
+                        this.scene.start('Intro');
+                    }
+                    else if (event.key == '2') {
+                        this.scene.start('Logo');
+                    }
+                    else if (event.key == '3') {
+                        this.scene.start('ThemePage');
+                    }
+                    else if (event.key == '4') {
+                        this.scene.start('GameCanvas');
+                    }
+                    else if (event.key == '5') {
+                        this.scene.start('Credit');
+                    }
+                });
             }
         }
 
-        class LogoPage extends Phaser.Scene {
-        
-            constructor(){
-                super("LogoPage");
+        class Logo extends Phaser.Scene {
+
+            constructor() {
+                super("Logo");
             }
 
-            create(){
-                
+            preload() {
+                this.load.path = './assets';
+                /* this.load.image("", ""); */
+                //this.load.audio("meow", "funny-meow-110120.mp3")
             }
 
+            create() {
+
+                this.graphics = this.add.graphics();
+
+                this.add.text(10, 20, "This is Logo page.",{color: "#FF0000"});
+
+                this.time.delayedCall(5000, () => {
+                    let continueText = this.add.text(850, 600, '(click to continue...)');
+                })
+
+                this.input.on('pointerdown', () => {
+                    this.time.delayedCall(2000, () => {
+                        this.cameras.main.fadeOut(1000, 255, 255, 255);
+                        this.time.delayedCall(5000, () => {
+                            this.scene.start('ThemePage');
+                        });
+                    })
+                });
+
+                this.input.keyboard.on('keydown', (event) => {
+                    console.log('keydown event', event);
+                    if (event.key == '1') {
+                        this.scene.start('Intro');
+                    }
+                    if (event.key == '2') {
+                        this.scene.start('Logo');
+                    }
+                    if (event.key == '3') {
+                        this.scene.start('ThemePage');
+                    }
+                    if (event.key == '4') {
+                        this.scene.start('GameCanvas');
+                    }
+                    if (event.key == '5') {
+                        this.scene.start('Credit');
+                    }
+                });
+            }
+
+        }
+
+        class ThemePage extends Phaser.Scene {
+
+            constructor() {
+                super("ThemePage");
+            }
+
+            create() {
+                this.add.text(10, 20, "This is theme page.");
+
+                this.time.delayedCall(5000, () => {
+                    let continueText = this.add.text(850, 600, '(click to continue...)');
+                })
+
+                this.input.on('pointerdown', () => {
+                    this.time.delayedCall(2000, () => {
+                        this.cameras.main.fadeOut(1000, 255, 255, 255);
+                        this.time.delayedCall(5000, () => {
+                            this.scene.start('GameCanvas');
+                        });
+                    })
+                });
+
+                this.input.keyboard.on('keydown', (event) => {
+                    console.log('keydown event', event);
+                    if (event.key == '1') {
+                        this.scene.start('Intro');
+                    }
+                    if (event.key == '2') {
+                        this.scene.start('Logo');
+                    }
+                    if (event.key == '3') {
+                        this.scene.start('ThemePage');
+                    }
+                    if (event.key == '4') {
+                        this.scene.start('GameCanvas');
+                    }
+                    if (event.key == '5') {
+                        this.scene.start('Credit');
+                    }
+                });
+            }
         }
 
         class GameCanvas extends Phaser.Scene {
@@ -39,13 +154,80 @@
                 super("GameCanvas");
             }
 
+            create() {
+                this.add.text(10, 20, "This is Game canvas page.");
+
+                this.time.delayedCall(5000, () => {
+                    let continueText = this.add.text(850, 600, '(click to continue...)');
+                })
+
+                this.input.on('pointerdown', () => {
+                    this.time.delayedCall(1000, () => {
+                        this.cameras.main.fadeOut(2000, 255, 255, 255);
+                        this.time.delayedCall(5000, () => {
+                            this.scene.start('Credit');
+                        });
+                    })
+                });
+
+                this.input.keyboard.on('keydown', (event) => {
+                    console.log('keydown event', event);
+                    if (event.key == '1') {
+                        this.scene.start('Intro');
+                    }
+                    if (event.key == '2') {
+                        this.scene.start('Logo');
+                    }
+                    if (event.key == '3') {
+                        this.scene.start('ThemePage');
+                    }
+                    if (event.key == '4') {
+                        this.scene.start('GameCanvas');
+                    }
+                    if (event.key == '5') {
+                        this.scene.start('Credit');
+                    }
+                });
+            }
+        }
+
+        class Credit extends Phaser.Scene {
+
+            constructor() {
+                super("Credit");
+            }
+
+            create() {
+                this.add.text(10, 20, "This is Credit page.");
+
+
+                this.input.keyboard.on('keydown', (event) => {
+                    console.log('keydown event', event);
+                    if (event.key == '1') {
+                        this.scene.start('Intro');
+                    }
+                    if (event.key == '2') {
+                        this.scene.start('Logo');
+                    }
+                    if (event.key == '3') {
+                        this.scene.start('ThemePage');
+                    }
+                    if (event.key == '4') {
+                        this.scene.start('GameCanvas');
+                    }
+                    if (event.key == '5') {
+                        this.scene.start('Credit');
+                    }
+                });
+            }
+
         }
         new Phaser.Game({
 
             width: 1080,
             height: 640,
-            scene: [Intro, GameCanvas],
-            backgroundColor: 0x2D719B
+            scene: [Intro, Logo, ThemePage, GameCanvas, Credit],
+            backgroundColor: 0x000000
         });
     </script>
 </head>
