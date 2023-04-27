@@ -17,8 +17,11 @@
             }
 
             create() {
-                let text1 = this.add.text(10, 20, 
-                `This is Intro page, click to next page.\n
+
+                this.cameras.main.fadeIn(1000, 255, 255, 255);
+
+                let text1 = this.add.text(10, 20,
+                    `This is Intro page, click to next page.\n
                 This web mainly include:
                 1. Intro page.
                 2. Logo page.
@@ -29,7 +32,14 @@
                 `
                 );
 
-                this.input.on('pointerdown', () => this.scene.start('Logo'));
+                this.input.on('pointerdown', () => {
+                    this.time.delayedCall(1000, () => {
+                        this.cameras.main.fadeOut(1000, 255, 255, 255);
+                        this.time.delayedCall(2000, () => {
+                            this.scene.start('Logo');
+                        });
+                    })
+                });
 
                 this.input.keyboard.on('keydown', (event) => {
                     console.log('keydown event', event);
@@ -59,25 +69,77 @@
             }
 
             preload() {
-                this.load.path = './assets';
-                /* this.load.image("", ""); */
-                //this.load.audio("meow", "funny-meow-110120.mp3")
+                this.load.path = './assets/';
+                this.load.image("gamemaker", "gamemaker.png");
+                this.load.audio('meow', 'funny-meow-110120.mp3');
             }
 
             create() {
 
-                this.graphics = this.add.graphics();
+                const centerX = this.game.config.width / 2;
+                const centerY = this.game.config.height / 2;
+                var rotateAngle = 0;
 
-                this.add.text(10, 20, "This is Logo page.",{color: "#FF0000"});
+                this.cameras.main.fadeIn(1000, 255, 255, 255);
+
+
+                this.add.text(10, 20, "This is Logo page.", { color: "#FFFFFF" });
+
+                let timer = this.time.addEvent({
+                    delay: 100,
+                    callback: createCircle,
+                    callbackScope: this,
+                    loop: true
+                });
+
+                function createCircle() {
+                    let color = Phaser.Display.Color.RandomRGB(50, 255);
+
+                    rotateAngle += 0.33; 
+
+                    let circle = this.add.circle(centerX + 100*Math.cos(rotateAngle), centerY + 100*Math.sin(rotateAngle), 13, color.color);
+
+                    this.tweens.add({
+                        targets: circle,
+                        alpha: 0,
+                        scale: 2,
+                        duration: 2000,
+                        onComplete: function () {
+                            circle.destroy();
+                        }
+                    });
+                }
+                
+                var logoImage = this.add.image(
+                    centerX,
+                    centerY,
+                    'gamemaker'
+                )
+                logoImage.setScale(0.1);
+                logoImage.alpha = 0;
+
+                this.tweens.add({
+                    targets:logoImage,
+                    alpha:1,
+                    scaleX: 0.3,
+                    scaleY: 0.3,
+                    angle:-10,
+                    duration:1000,
+                    ease:"liner"
+                });
+
+                let logoBgm = this.sound.add('meow', { loop: false });
+
+                logoBgm.play();
 
                 this.time.delayedCall(5000, () => {
                     let continueText = this.add.text(850, 600, '(click to continue...)');
-                })
+                });
 
                 this.input.on('pointerdown', () => {
-                    this.time.delayedCall(2000, () => {
+                    this.time.delayedCall(1000, () => {
                         this.cameras.main.fadeOut(1000, 255, 255, 255);
-                        this.time.delayedCall(5000, () => {
+                        this.time.delayedCall(2000, () => {
                             this.scene.start('ThemePage');
                         });
                     })
@@ -111,17 +173,101 @@
                 super("ThemePage");
             }
 
+            preload() {
+                this.load.path = './assets/';
+                this.load.image("themepage", "themepage.png");
+                this.load.audio('waves', 'gentle-ocean-waves-birdsong-and-gull-7109.mp3');
+            }
+
             create() {
+
+                this.cameras.main.fadeIn(1000, 255, 255, 255);
+
                 this.add.text(10, 20, "This is theme page.");
+
+                let themeBgm = this.sound.add("waves", { loop: false, volume: 0.5 });
+
+                themeBgm.play();
+
+                var themeImage = this.add.image(this.game.config.width/2,this.game.config.height/2,'themepage');
+                themeImage.setScale(0.6);
+
+                this.tweens.add({
+                    targets:themeImage,
+                    x: this.game.config.width/2 + 300,
+                    duration:3000,
+                    ease:"power2"
+                });
+
+                this.time.delayedCall(3000,()=>{
+                    let starttext = this.add.text(-10,140,"Start",
+                    {
+                        fontFamily:"system-ui",
+                        color:"#FF0000",
+                    });
+
+                    this.tweens.add({
+                        targets:starttext,
+                        x:100,
+                        duration:500,
+                        ease:"Bounce"
+                    });
+                });
+
+                this.time.delayedCall(3500,()=>{
+                    let loadtext = this.add.text(-10,230,"Load",
+                    {
+                        fontFamily:"system-ui",
+                        color:"#FFFFFF",
+                    });
+
+                    this.tweens.add({
+                        targets:loadtext,
+                        x:100,
+                        duration:500,
+                        ease:"Bounce"
+                    });
+                });
+
+                this.time.delayedCall(4000,()=>{
+                    let optiontext = this.add.text(-10,320,"Option",
+                    {
+                        fontFamily:"system-ui",
+                        color:"#FFFFFF",
+                    });
+
+                    this.tweens.add({
+                        targets:optiontext,
+                        x:100,
+                        duration:500,
+                        ease:"Bounce"
+                    });
+                });
+
+                this.time.delayedCall(4500,()=>{
+                    let credittext = this.add.text(-10,410,"Credit",
+                    {
+                        fontFamily:"system-ui",
+                        color:"#FFFFFF",
+                    });
+
+                    this.tweens.add({
+                        targets:credittext,
+                        x:100,
+                        duration:500,
+                        ease:"Bounce"
+                    });
+                });
 
                 this.time.delayedCall(5000, () => {
                     let continueText = this.add.text(850, 600, '(click to continue...)');
-                })
+                });
 
                 this.input.on('pointerdown', () => {
-                    this.time.delayedCall(2000, () => {
+                    this.time.delayedCall(1000, () => {
                         this.cameras.main.fadeOut(1000, 255, 255, 255);
-                        this.time.delayedCall(5000, () => {
+                        this.time.delayedCall(2000, () => {
+                            themeBgm.stop();
                             this.scene.start('GameCanvas');
                         });
                     })
@@ -129,6 +275,7 @@
 
                 this.input.keyboard.on('keydown', (event) => {
                     console.log('keydown event', event);
+                    themeBgm.stop();
                     if (event.key == '1') {
                         this.scene.start('Intro');
                     }
@@ -155,16 +302,21 @@
             }
 
             create() {
+
+                this.cameras.main.fadeIn(1000, 255, 255, 255);
+
                 this.add.text(10, 20, "This is Game canvas page.");
+
+                this.add.text(10, 40,"Game is still working.");
 
                 this.time.delayedCall(5000, () => {
                     let continueText = this.add.text(850, 600, '(click to continue...)');
-                })
+                });
 
                 this.input.on('pointerdown', () => {
                     this.time.delayedCall(1000, () => {
                         this.cameras.main.fadeOut(2000, 255, 255, 255);
-                        this.time.delayedCall(5000, () => {
+                        this.time.delayedCall(2000, () => {
                             this.scene.start('Credit');
                         });
                     })
@@ -198,8 +350,16 @@
             }
 
             create() {
+
+                this.cameras.main.fadeIn(1000, 255, 255, 255);
+
                 this.add.text(10, 20, "This is Credit page.");
 
+                this.add.text(10, 40,`
+                Art: Stable Diffusion generated.
+                Sound Effert: funny-meow-110120.mp3 - unknown
+                              gentle-ocean-waves-birdsong-and-gull-7109.mp3 - unknown
+                `)
 
                 this.input.keyboard.on('keydown', (event) => {
                     console.log('keydown event', event);
@@ -227,7 +387,7 @@
             width: 1080,
             height: 640,
             scene: [Intro, Logo, ThemePage, GameCanvas, Credit],
-            backgroundColor: 0x000000
+            backgroundColor: 0x000000,
         });
     </script>
 </head>
