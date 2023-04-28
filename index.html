@@ -86,7 +86,7 @@
                 this.lights.enable();
                 this.lights.setAmbientColor(0x808080);
 
-                var spotlight = this.lights.addLight(centerX, centerY, 35).setIntensity(3);
+                var spotlight = this.lights.addLight(pointer=>pointer.x, pointer=>pointer.x, 35).setIntensity(6);
 
                 this.input.on('pointermove', pointer => {
 
@@ -111,6 +111,8 @@
 
                     let circle = this.add.circle(centerX + 100 * Math.cos(rotateAngle), centerY + 100 * Math.sin(rotateAngle), 13, color.color);
 
+                    circle.setPipeline('Light2D');
+
                     this.tweens.add({
                         targets: circle,
                         alpha: 0,
@@ -129,6 +131,7 @@
                 )
                 logoImage.setScale(0.1);
                 logoImage.alpha = 0;
+                logoImage.setPipeline('Light2D');
 
                 this.tweens.add({
                     targets: logoImage,
