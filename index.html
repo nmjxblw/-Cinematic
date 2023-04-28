@@ -86,7 +86,7 @@
                 this.lights.enable();
                 this.lights.setAmbientColor(0x808080);
 
-                var spotlight = this.lights.addLight(pointer=>pointer.x, pointer=>pointer.x, 35).setIntensity(6);
+                var spotlight = this.lights.addLight(pointer => pointer.x, pointer => pointer.x, 35).setIntensity(6);
 
                 this.input.on('pointermove', pointer => {
 
@@ -200,12 +200,25 @@
 
                 this.add.text(10, 20, "This is theme page.");
 
+                this.lights.enable();
+                this.lights.setAmbientColor(0x808080);
+
+                var spotlight = this.lights.addLight(pointer => pointer.x, pointer => pointer.x, 35).setIntensity(6);
+
+                this.input.on('pointermove', pointer => {
+
+                    spotlight.x = pointer.x;
+                    spotlight.y = pointer.y;
+
+                });
+
                 let themeBgm = this.sound.add("waves", { loop: false, volume: 0.5 });
 
                 themeBgm.play();
 
                 var themeImage = this.add.image(this.game.config.width / 2, this.game.config.height / 2, 'themepage');
                 themeImage.setScale(0.6);
+                themeImage.setPipeline("2Dlight");
 
                 this.tweens.add({
                     targets: themeImage,
@@ -220,6 +233,8 @@
                             fontFamily: "system-ui",
                             color: "#FF0000",
                         });
+
+                    starttext.setPipeline('Light2D');
 
                     this.tweens.add({
                         targets: starttext,
@@ -243,6 +258,8 @@
                             color: "#FFFFFF",
                         });
 
+                    loadtext.setPipeline('Light2D');
+
                     this.tweens.add({
                         targets: loadtext,
                         x: 100,
@@ -258,6 +275,8 @@
                             color: "#FFFFFF",
                         });
 
+                    optiontext.setPipeline('Light2D');
+
                     this.tweens.add({
                         targets: optiontext,
                         x: 100,
@@ -272,6 +291,8 @@
                             fontFamily: "system-ui",
                             color: "#FFFFFF",
                         });
+
+                    credittext.setPipeline('Light2D');
 
                     this.tweens.add({
                         targets: credittext,
