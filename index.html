@@ -72,6 +72,7 @@
                 this.load.path = './assets/';
                 this.load.image("gamemaker", "gamemaker.png");
                 this.load.audio('meow', 'funny-meow-110120.mp3');
+                this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
             }
 
             create() {
@@ -82,6 +83,17 @@
 
                 this.cameras.main.fadeIn(1000, 255, 255, 255);
 
+                this.lights.enable();
+                this.lights.setAmbientColor(0x808080);
+
+                var spotlight = this.lights.addLight(centerX, centerY, 35).setIntensity(3);
+
+                this.input.on('pointermove', pointer => {
+
+                    spotlight.x = pointer.x;
+                    spotlight.y = pointer.y;
+
+                });
 
                 this.add.text(10, 20, "This is Logo page.", { color: "#FFFFFF" });
 
@@ -95,9 +107,9 @@
                 function createCircle() {
                     let color = Phaser.Display.Color.RandomRGB(50, 255);
 
-                    rotateAngle += 0.33; 
+                    rotateAngle += 0.33;
 
-                    let circle = this.add.circle(centerX + 100*Math.cos(rotateAngle), centerY + 100*Math.sin(rotateAngle), 13, color.color);
+                    let circle = this.add.circle(centerX + 100 * Math.cos(rotateAngle), centerY + 100 * Math.sin(rotateAngle), 13, color.color);
 
                     this.tweens.add({
                         targets: circle,
@@ -109,7 +121,7 @@
                         }
                     });
                 }
-                
+
                 var logoImage = this.add.image(
                     centerX,
                     centerY,
@@ -119,13 +131,13 @@
                 logoImage.alpha = 0;
 
                 this.tweens.add({
-                    targets:logoImage,
-                    alpha:1,
+                    targets: logoImage,
+                    alpha: 1,
                     scaleX: 0.3,
                     scaleY: 0.3,
-                    angle:-10,
-                    duration:1000,
-                    ease:"liner"
+                    angle: -10,
+                    duration: 1000,
+                    ease: "liner"
                 });
 
                 let logoBgm = this.sound.add('meow', { loop: false });
@@ -189,80 +201,80 @@
 
                 themeBgm.play();
 
-                var themeImage = this.add.image(this.game.config.width/2,this.game.config.height/2,'themepage');
+                var themeImage = this.add.image(this.game.config.width / 2, this.game.config.height / 2, 'themepage');
                 themeImage.setScale(0.6);
 
                 this.tweens.add({
-                    targets:themeImage,
-                    x: this.game.config.width/2 + 300,
-                    duration:3000,
-                    ease:"power2"
+                    targets: themeImage,
+                    x: this.game.config.width / 2 + 300,
+                    duration: 3000,
+                    ease: "power2"
                 });
 
-                this.time.delayedCall(3000,()=>{
-                    let starttext = this.add.text(-10,140,"Start",
-                    {
-                        fontFamily:"system-ui",
-                        color:"#FF0000",
-                    });
+                this.time.delayedCall(3000, () => {
+                    let starttext = this.add.text(-10, 140, "Start",
+                        {
+                            fontFamily: "system-ui",
+                            color: "#FF0000",
+                        });
 
                     this.tweens.add({
-                        targets:starttext,
-                        x:100,
-                        duration:500,
-                        ease:"Bounce"
+                        targets: starttext,
+                        x: 100,
+                        duration: 500,
+                        ease: "Bounce"
                     });
 
                     var graphics = this.add.graphics();
 
-                    this.time.delayedCall(1000,()=>{
-                        graphics.fillStyle(0xFFFFFF,0.8);
-                        graphics.fillTriangle(95,150,90,145,90,155);
+                    this.time.delayedCall(1000, () => {
+                        graphics.fillStyle(0xFFFFFF, 0.8);
+                        graphics.fillTriangle(95, 150, 90, 145, 90, 155);
                     });
                 });
 
-                this.time.delayedCall(3500,()=>{
-                    let loadtext = this.add.text(-10,230,"Load",
-                    {
-                        fontFamily:"system-ui",
-                        color:"#FFFFFF",
-                    });
+                this.time.delayedCall(3500, () => {
+                    let loadtext = this.add.text(-10, 230, "Load",
+                        {
+                            fontFamily: "system-ui",
+                            color: "#FFFFFF",
+                        });
 
                     this.tweens.add({
-                        targets:loadtext,
-                        x:100,
-                        duration:500,
-                        ease:"Bounce"
+                        targets: loadtext,
+                        x: 100,
+                        duration: 500,
+                        ease: "Bounce"
                     });
                 });
 
-                this.time.delayedCall(4000,()=>{
-                    let optiontext = this.add.text(-10,320,"Option",
-                    {
-                        fontFamily:"system-ui",
-                        color:"#FFFFFF",
-                    });
+                this.time.delayedCall(4000, () => {
+                    let optiontext = this.add.text(-10, 320, "Option",
+                        {
+                            fontFamily: "system-ui",
+                            color: "#FFFFFF",
+                        });
 
                     this.tweens.add({
-                        targets:optiontext,
-                        x:100,
-                        duration:500,
-                        ease:"Bounce"
+                        targets: optiontext,
+                        x: 100,
+                        duration: 500,
+                        ease: "Bounce"
                     });
                 });
 
-                this.time.delayedCall(4500,()=>{
-                    let credittext = this.add.text(-10,410,"Credit",
-                    {
-                        fontFamily:"system-ui",
-                        color:"#FFFFFF",
-                    });
+                this.time.delayedCall(4500, () => {
+                    let credittext = this.add.text(-10, 410, "Credit",
+                        {
+                            fontFamily: "system-ui",
+                            color: "#FFFFFF",
+                        });
 
                     this.tweens.add({
-                        targets:credittext,
-                        x:100,
-                        duration:500,
-                        ease:"Bounce"
+                        targets: credittext,
+                        x: 100,
+                        duration: 500,
+                        ease: "Bounce"
                     });
                 });
 
@@ -314,7 +326,7 @@
 
                 this.add.text(10, 20, "This is Game canvas page.");
 
-                this.add.text(10, 40,"Game is still working.");
+                this.add.text(10, 40, "Game is still working.");
 
                 this.time.delayedCall(5000, () => {
                     let continueText = this.add.text(850, 600, '(click to continue...)');
@@ -362,7 +374,7 @@
 
                 this.add.text(10, 20, "This is Credit page.");
 
-                this.add.text(10, 40,`
+                this.add.text(10, 40, `
                 Art: Stable Diffusion generated.
                 Sound Effert: funny-meow-110120.mp3 - unknown
                               gentle-ocean-waves-birdsong-and-gull-7109.mp3 - unknown
@@ -390,9 +402,20 @@
 
         }
         new Phaser.Game({
-
-            width: 1080,
-            height: 640,
+            type: Phaser.AUTO,
+            scale: {
+                mode: Phaser.Scale.FIT,
+                autoCenter: Phaser.Scale.CENTER_BOTH,
+                width: 1080,
+                height: 640
+            },
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    gravity: { y: 300 },
+                    debug: false
+                }
+            },
             scene: [Intro, Logo, ThemePage, GameCanvas, Credit],
             backgroundColor: 0x000000,
         });
