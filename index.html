@@ -344,6 +344,11 @@
                 super("GameCanvas");
             }
 
+            preload(){
+                this.load.path = './assets/';
+                this.load.image("girl", "girl1.png");
+            }
+
             create() {
 
                 this.cameras.main.fadeIn(1000, 255, 255, 255);
@@ -351,6 +356,9 @@
                 this.add.text(10, 20, "This is Game canvas page.");
 
                 this.add.text(10, 40, "Game is still working.");
+
+                let girl = this.add.image(this.game.config.width / 2, this.game.config.height / 2,"girl");
+                girl.setScale(0.6);
 
                 this.time.delayedCall(5000, () => {
                     let continueText = this.add.text(850, 600, '(click to continue...)');
